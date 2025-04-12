@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+
+* {
+  box-sizing: border-box;
+  scrollbar-width: none;
+}
+body {
+  @apply bg-gray-800;
+}

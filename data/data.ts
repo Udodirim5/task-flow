@@ -1,0 +1,48 @@
+import { Task } from "../src/type/types";
+
+export const tasks: Task[] = [
+  {
+    id: 1,
+    title: "Complete project proposal",
+    priority: "High",
+    status: "In Progress",
+    dueDate: "2023-11-20",
+    category: "Work",
+    description: " This is a project proposal",
+    tags: ["JS", "React"],
+    createdAt: "2023-11-15",
+  },
+  {
+    id: 2,
+    title: "Review team tasks",
+    priority: "Medium",
+    status: "Pending",
+    dueDate: "2023-11-22",
+    category: "Team",
+    description: "This is a team task",
+    tags: ["Team", "Review"],
+    createdAt: "2023-11-18",
+  },
+  {
+    id: 3,
+    title: "Update documentation",
+    priority: "Low",
+    status: "Completed",
+    dueDate: "2023-11-18",
+    category: "Documentation",
+    description: "This is a documentation task",
+    tags: ["Documentation", "Update"],
+    createdAt: "2023-11-15",
+  },
+  {
+    id: 4,
+    title: "Schedule team meeting",
+    priority: "Medium",
+    status: "In Progress",
+    dueDate: "2023-11-21",
+    category: "Team",
+    description: "This is a team meeting task",
+    tags: ["Team", "Meeting"],
+    createdAt: "2023-11-19",
+  },
+];
