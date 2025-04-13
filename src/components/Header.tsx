@@ -9,7 +9,7 @@ const Header = () => {
   }
 
   return (
-    <header className="bg-gradient-to-r from-indigo-900 to-gray-900 shadow-lg">
+    <header className="fixed top-0 w-full bg-gradient-to-r from-indigo-900 to-gray-900 shadow-lg">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}

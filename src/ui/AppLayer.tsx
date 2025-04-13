@@ -6,7 +6,7 @@ const AppLayer = () => {
     <>
       <Header />
 
-      <main>
+      <main className="mt-20" >
         <Outlet />
       </main>
       </>

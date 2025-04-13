@@ -5,13 +5,54 @@ import { Pencil, Plus, Trash } from "lucide-react";
 import Modal from "../ui/Modal";
 import TaskForm from "../ui/TaskForm";
 import ConfirmDelete from "../ui/ConfirmDelete";
+import SortBy from "../ui/SortBy";
+import FilterSelect from "../ui/filter";
+import { useSearchParams } from "react-router-dom";
 
 // Sample tasks data - you'll replace with your actual data
 const Dashboard = () => {
+  const [searchParams] = useSearchParams();
 
   const tasks = useSelector((state: RootState) => state.tasks.items);
   const dispatch = useDispatch<AppDispatch>();
 
+  const filterValue = searchParams.get("status") || "all";
+  const sortBy = searchParams.get("sortBy") || "";
+
+  // 1. Filter tasks by status
+  // Clone first to avoid mutating the original
+  let filteredTasks = [...tasks];
+
+  if (filterValue !== "all") {
+    filteredTasks = filteredTasks.filter(
+      (task) => task.status.toLowerCase() === filterValue.toLowerCase()
+    );
+  }
+
+  if (sortBy === "due-date") {
+    filteredTasks = [...filteredTasks].sort(
+      (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+    );
+  }
+
+  if (sortBy === "priority") {
+    const priorityOrder: { [key: string]: number } = {
+      High: 1,
+      Medium: 2,
+      Low: 3,
+    };
+
+    filteredTasks = [...filteredTasks].sort(
+      (a, b) =>
+        (priorityOrder[a.priority] ?? 99) - (priorityOrder[b.priority] ?? 99)
+    );
+  }
+
+  if (sortBy === "title") {
+    filteredTasks = [...filteredTasks].sort((a, b) =>
+      a.title.localeCompare(b.title)
+    );
+  }
 
   return (
     <div className="p-4 md:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -44,15 +85,14 @@ const Dashboard = () => {
 
         {/* Filter Dropdown */}
         <div className="relative flex-1 sm:max-w-[200px]">
-          <select
-            className="w-full px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg appearance-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800 dark:text-white pr-8"
-            aria-label="filter"
-          >
-            <option value="">Filter by Status</option>
-            <option value="pending">Pending</option>
-            <option value="in-progress">In Progress</option>
-            <option value="completed">Completed</option>
-          </select>
+          <FilterSelect
+            options={[
+              { value: "all", label: "Filter by Status" },
+              { value: "pending", label: "Filter by Pending]" },
+              { value: "in-progress", label: "Filter by progress" },
+              { value: "completed", label: "Filter by Completed" },
+            ]}
+          />
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <svg
               className="w-5 h-5 text-gray-400"
@@ -72,15 +112,15 @@ const Dashboard = () => {
 
         {/* Sort Dropdown */}
         <div className="relative flex-1 sm:max-w-[200px]">
-          <select
-            className="w-full px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg appearance-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800 dark:text-white pr-8"
-            aria-label="sort"
-          >
-            <option value="">Sort by</option>
-            <option value="due-date">Due Date</option>
-            <option value="priority">Priority</option>
-            <option value="title">Title</option>
-          </select>
+          <SortBy
+            options={[
+              { value: "all", label: "Sort by" },
+              { value: "due-date", label: "Sort by Due Date]" },
+              { value: "priority", label: "Sort by Priority" },
+              { value: "title", label: "Sort by Title" },
+            ]}
+          />
+
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <svg
               className="w-5 h-5 text-gray-400"
@@ -127,7 +167,7 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {tasks.map((task) => (
+              {filteredTasks.map((task) => (
                 <tr
                   key={task.id}
                   className="hover:bg-gray-50 dark:hover:bg-gray-700"
@@ -153,7 +193,7 @@ const Dashboard = () => {
                       className={`px-2 py-1 text-xs rounded-full ${
                         task.status === "Completed"
                           ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-                          : task.status === "In Progress"
+                          : task.status === "In-progress"
                           ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
                           : "bg-gray-100 text-gray-800 dark:bg-gray-600 dark:text-gray-200"
                       }`}
@@ -189,7 +229,6 @@ const Dashboard = () => {
                           <button
                             className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
                             aria-label="delete button"
-                            onClick={() => dispatch(deleteTask(task.id))}
                           >
                             <Trash />
                           </button>

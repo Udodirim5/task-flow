@@ -25,8 +25,33 @@ const tasksSlice = createSlice({
     deleteTask: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((task) => task.id !== action.payload);
     },
+    startTask: (state, action: PayloadAction<number>) => {
+      const task = state.items.find((t) => t.id === action.payload);
+      if (task) {
+        task.status = "In-progress";
+      }
+    },
+    markAsComplete: (state, action: PayloadAction<number>) => {
+      const task = state.items.find((t) => t.id === action.payload);
+      if (task) {
+        task.status = "Completed";
+      }
+    },
+    stopTask: (state, action: PayloadAction<number>) => {
+      const task = state.items.find((t) => t.id === action.payload);
+      if (task) {
+        task.status = "Pending";
+      }
+    },
   },
 });
 
-export const { setTasks, addTask, deleteTask } = tasksSlice.actions;
+export const {
+  setTasks,
+  addTask,
+  deleteTask,
+  startTask,
+  markAsComplete,
+  stopTask,
+} = tasksSlice.actions;
 export default tasksSlice.reducer;

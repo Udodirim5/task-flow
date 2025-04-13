@@ -2,18 +2,15 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { RootState } from "../store";
+import { Task } from "../type/types";
 
 const HomePage = () => {
   const tasks = useSelector((state: RootState) => state.tasks.items);
-  // Sample tasks data - replace with your actual data
-
-  // State for search/filter/sort - you'll implement these
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [priorityFilter, setPriorityFilter] = useState("All");
   const [sortOption, setSortOption] = useState("Due Date");
 
-  // Filter and sort tasks - you'll implement this logic
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch =
       task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -29,7 +26,8 @@ const HomePage = () => {
     if (sortOption === "Due Date") {
       return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
     } else if (sortOption === "Priority") {
-      const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+      const priorityOrder: Record<Task["priority"], number> = {
+        High: 1, Medium: 2, Low: 3 };
       return (
         priorityOrder[a.priority as keyof typeof priorityOrder] -
         priorityOrder[b.priority as keyof typeof priorityOrder]
@@ -178,7 +176,7 @@ const HomePage = () => {
                     className={`text-xs px-2 py-1 rounded-full ${
                       task.status === "Completed"
                         ? "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200"
-                        : task.status === "In Progress"
+                        : task.status === "In-progress"
                         ? "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200"
                         : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
                     }`}

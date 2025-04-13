@@ -1,20 +1,21 @@
-import type { RootState } from "../store";
-import { useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  markAsComplete,
+  startTask,
+  stopTask,
+} from "../features/task/tasksSlice";
 
-// const TaskSingle = ({ task, onComplete, onEdit, onDelete, onBack }) => {
 const TaskSingle = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const taskId = Number(id);
-  
-  const tasks = useSelector((state: RootState) => state.tasks.items);
-  const task = tasks.find((t) => t.id === Number(taskId));
 
-  console.log("TaskSingle component rendered");
-  console.log("Task ID:", taskId);
-  console.log("Task data:", task);
-  console.log("Tasks:", tasks);
+  const tasks = useSelector((state: RootState) => state.tasks.items);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const task = tasks.find((t) => t.id === Number(taskId));
 
   if (!task)
     return (
@@ -49,18 +50,22 @@ const TaskSingle = () => {
           </button>
 
           <div className="flex space-x-3">
-            <button
-              // onClick={onEdit}
-              className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              Edit
-            </button>
-            <button
-              // onClick={onDelete}
-              className="px-3 py-1 border border-red-200 dark:border-red-800 rounded-md text-sm font-medium text-red-700 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/30"
-            >
-              Delete
-            </button>
+            {task.status === "Pending" && (
+              <button
+                onClick={() => dispatch(startTask(task.id))}
+                className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                Start Task
+              </button>
+            )}
+            {task.status === "In-progress" && (
+              <button
+                onClick={() => dispatch(stopTask(task.id))}
+                className="px-3 py-1 border border-red-200 dark:border-red-800 rounded-md text-sm font-medium text-red-700 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/30"
+              >
+                Stop Task
+              </button>
+            )}
           </div>
         </div>
 
@@ -104,7 +109,7 @@ const TaskSingle = () => {
                   className={`px-3 py-1 rounded-full text-sm font-medium ${
                     task.status === "Completed"
                       ? "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200"
-                      : task.status === "In Progress"
+                      : task.status === "In-progress"
                       ? "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200"
                       : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
                   }`}
@@ -205,10 +210,10 @@ const TaskSingle = () => {
             </div>
 
             {/* Completion Button */}
-            {task.status !== "Completed" && (
+            {task.status === "In-progress" && (
               <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                 <button
-                  // onClick={onComplete}
+                  onClick={() => dispatch(markAsComplete(task.id))}
                   className="w-full md:w-auto px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 >
                   Mark as Completed
