@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const ref = useOutsideClick<HTMLDivElement>(() => setIsMenuOpen(false));
+  
   const toggleMenuOnMobile = (): void => {
     setIsMenuOpen(prev => !prev);
   }
@@ -62,7 +64,7 @@ const Header = () => {
           </nav>
 
           {/* Mobile menu button and User Profile */}
-          <div className="flex items-center space-x-4">
+          <div ref={ref} className="flex items-center space-x-4">
             {/* Mobile menu button */}
             <button
               className="md:hidden p-2 rounded-md text-indigo-200 hover:text-white hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
