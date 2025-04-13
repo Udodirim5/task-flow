@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "../store";
 import { deleteTask } from "../features/task/tasksSlice";
-import { Pencil, Plus, Trash } from "lucide-react";
+import { SquarePen, Plus, Trash2Icon, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import Modal from "../ui/Modal";
 import TaskForm from "../ui/TaskForm";
 import ConfirmDelete from "../ui/ConfirmDelete";
@@ -55,7 +55,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="p-4 md:p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="p-4 md:p-6 bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
@@ -94,19 +94,7 @@ const Dashboard = () => {
             ]}
           />
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-            <svg
-              className="w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
+            <ChevronDown className="w-5 h-5 text-gray-400" />
           </div>
         </div>
 
@@ -122,19 +110,7 @@ const Dashboard = () => {
           />
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-            <svg
-              className="w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
+            <ChevronDown className="w-5 h-5 text-gray-400" />
           </div>
         </div>
       </div>
@@ -215,12 +191,12 @@ const Dashboard = () => {
                             className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
                             aria-label="edit button"
                           >
-                            <Pencil />
+                            <SquarePen />
                           </button>
                         </Modal.Open>
 
                         <Modal.Window name="window1">
-                          <TaskForm />
+                          <TaskForm task={task}/>
                         </Modal.Window>
                       </Modal>
 
@@ -230,7 +206,7 @@ const Dashboard = () => {
                             className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
                             aria-label="delete button"
                           >
-                            <Trash />
+                            <Trash2Icon />
                           </button>
                         </Modal.Open>
 
@@ -269,17 +245,7 @@ const Dashboard = () => {
                   className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   <span className="sr-only">Previous</span>
-                  <svg
-                    className="h-5 w-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <ChevronLeft className="w-5 h-5" />
                 </a>
                 <a
                   href="#"
@@ -299,17 +265,7 @@ const Dashboard = () => {
                   className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   <span className="sr-only">Next</span>
-                  <svg
-                    className="h-5 w-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <ChevronRight className="w-5 h-5" />
                 </a>
               </nav>
             </div>

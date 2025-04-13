@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Task } from "../type/types";
-import { addTask } from "../features/task/tasksSlice";
+import { addTask, updateTask } from "../features/task/tasksSlice";
 import { useState } from "react";
 
 type TaskFormProps = {
@@ -45,7 +45,7 @@ const TaskForm = ({ task = null, onCloseModal }: TaskFormProps) => {
     setErrors({});
 
     const newTask: Task = {
-      id: Date.now(),
+      id: task?.id ?? Date.now(),
       title: formData.get("title") as string,
       description: (formData.get("description") as string) || "",
       dueDate: (formData.get("dueDate") as string) || "",
@@ -60,7 +60,11 @@ const TaskForm = ({ task = null, onCloseModal }: TaskFormProps) => {
       createdAt: new Date().toISOString(),
     };
 
-    dispatch(addTask(newTask));
+    if (task) {
+      dispatch(updateTask(newTask));
+    } else {
+      dispatch(addTask(newTask));
+    }
 
     if (onCloseModal) onCloseModal();
   };

@@ -1,35 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useOutsideClick } from "../hooks/useOutsideClick";
+import { Bell, Clipboard, Menu } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const ref = useOutsideClick<HTMLDivElement>(() => setIsMenuOpen(false));
-  
+
   const toggleMenuOnMobile = (): void => {
-    setIsMenuOpen(prev => !prev);
-  }
+    setIsMenuOpen((prev) => !prev);
+  };
 
   return (
-    <header className="fixed top-0 w-full bg-gradient-to-r from-indigo-900 to-gray-900 shadow-lg">
+    <header className="fixed top-0 w-full bg-gradient-to-r from-indigo-900 to-gray-900 shadow-lg z-5 ">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
           <Link to="/" className="flex items-center space-x-2">
-            <svg
-              className="w-8 h-8 text-indigo-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-              />
-            </svg>
+            <Clipboard className="w-8 h-8 text-indigo-300" />
+
             <h1 className="text-2xl font-bold text-white">
               Task<span className="text-indigo-300">Flow</span>
             </h1>
@@ -71,20 +60,7 @@ const Header = () => {
               aria-label="Toggle menu"
               onClick={toggleMenuOnMobile}
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+              <Menu className="w-6 h-6" />
             </button>
 
             {/* User Profile - Hidden on mobile when menu is open */}
@@ -93,20 +69,7 @@ const Header = () => {
                 className="p-2 rounded-full hover:bg-indigo-800 transition-colors duration-200"
                 aria-label="Toggle user profile"
               >
-                <svg
-                  className="w-6 h-6 text-indigo-200"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                  />
-                </svg>
+                <Bell className="w-6 h-6 text-indigo-200" />
               </button>
               <div className="w-10 h-10 rounded-full bg-indigo-700 flex items-center justify-center text-indigo-100 font-medium">
                 JS
@@ -116,8 +79,9 @@ const Header = () => {
         </div>
 
         {/* Mobile Navigation - Hidden by default */}
-        <div className={`md:hidden mt-4 pb-4 ${isMenuOpen ? "block" : "hidden"}`}>
-
+        <div
+          className={`md:hidden mt-4 pb-4 ${isMenuOpen ? "block" : "hidden"}`}
+        >
           <div className="flex flex-col space-y-3 px-2">
             <Link
               to="/dashboard"

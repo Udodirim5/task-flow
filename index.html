@@ -1,13 +1,65 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Favicon using emoji (🎯 target emoji) -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>" />
+
+  <!-- Viewport for responsive scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#4f46e5" />
+
+  <!-- SEO and social sharing basics -->
+  <meta name="description" content="Task Flow - Manage your tasks effortlessly with a clean and intuitive interface." />
+  <meta name="keywords" content="task, todo, productivity, management, planner" />
+  <meta name="author" content="Your Name" />
+
+  <!-- Open Graph (OG) for social media previews -->
+  <meta property="og:title" content="Task Flow" />
+  <meta property="og:description" content="Manage your tasks effortlessly with Task Flow." />
+  <meta property="og:image" content="/preview.png" /> <!-- Add an actual preview.png -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Task Flow" />
+  <meta name="twitter:description" content="Manage your tasks effortlessly with Task Flow." />
+  <meta name="twitter:image" content="/preview.png" />
+
+  <!-- App title -->
+  <title>Task Flow</title>
+
+  <!-- Web manifest (optional PWA support) -->
+  <!-- <link rel="manifest" href="/manifest.json" /> -->
+
+  <!-- Fonts (optional) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="canonical" href="https://yourdomain.com/" />
+
+  <!-- Tailwind CSS (or your preferred framework) -->
+  <!-- Already included in your Vite/React build via main.tsx, this is optional if you use CDN too -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.0.0/dist/tailwind.min.css" rel="stylesheet"> -->
+</head>
+
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white font-sans">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+
+  <!-- Google Analytics (example) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+</body>
+
 </html>

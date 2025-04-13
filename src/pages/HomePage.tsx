@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { RootState } from "../store";
 import { Task } from "../type/types";
+import { Calendar, Clipboard, FolderOpen, Search } from "lucide-react";
 
 const HomePage = () => {
   const tasks = useSelector((state: RootState) => state.tasks.items);
@@ -27,7 +28,10 @@ const HomePage = () => {
       return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
     } else if (sortOption === "Priority") {
       const priorityOrder: Record<Task["priority"], number> = {
-        High: 1, Medium: 2, Low: 3 };
+        High: 1,
+        Medium: 2,
+        Low: 3,
+      };
       return (
         priorityOrder[a.priority as keyof typeof priorityOrder] -
         priorityOrder[b.priority as keyof typeof priorityOrder]
@@ -57,19 +61,7 @@ const HomePage = () => {
         <div className="md:col-span-1">
           <div className="relative rounded-md shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg
-                className="h-5 w-5 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+              <Search className="h-5 w-5 text-gray-400" />
             </div>
             <input
               type="text"
@@ -186,19 +178,7 @@ const HomePage = () => {
                 </div>
 
                 <div className="flex items-center">
-                  <svg
-                    className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-1.5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
+                  <Calendar className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-1.5" />
                   <span className="text-xs text-gray-600 dark:text-gray-400">
                     Due:{" "}
                     {new Date(task.dueDate).toLocaleDateString("en-US", {
@@ -209,19 +189,7 @@ const HomePage = () => {
                 </div>
 
                 <div className="flex items-center">
-                  <svg
-                    className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-1.5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"
-                    />
-                  </svg>
+                  <FolderOpen className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-1.5" />
                   <span className="text-xs text-gray-600 dark:text-gray-400">
                     {task.category}
                   </span>
@@ -235,19 +203,7 @@ const HomePage = () => {
       {/* Empty State */}
       {sortedTasks.length === 0 && (
         <div className="text-center py-12">
-          <svg
-            className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-            />
-          </svg>
+          <Clipboard className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
           <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">
             No tasks found
           </h3>
