@@ -88,7 +88,7 @@ const TaskSingle = () => {
                     {task.title}
                   </h2>
                   <span
-                    className={`px-2 py-1 text-xs rounded-full ${
+                    className={`px-2 py-1 text-xs rounded-lg ${
                       task.priority === "High"
                         ? "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200"
                         : task.priority === "Medium"
@@ -106,7 +106,7 @@ const TaskSingle = () => {
 
               <div className="mt-3 sm:mt-0">
                 <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
+                  className={`px-3 py-1 rounded-lg text-sm font-medium ${
                     task.status === "Completed"
                       ? "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200"
                       : task.status === "In-progress"
@@ -199,7 +199,7 @@ const TaskSingle = () => {
                     {task.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-200"
+                        className="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-200"
                       >
                         {tag}
                       </span>

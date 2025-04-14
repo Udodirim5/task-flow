@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { Task } from "../type/types";
-import { markAsComplete } from "../features/task/tasksSlice";
+import { deleteTask, markAsComplete } from "../features/task/tasksSlice";
 import { ChevronLeft, ChevronRight, Trash2Icon } from "lucide-react";
 
 type TaskPreview = {
@@ -225,7 +225,7 @@ const Calendar = () => {
                   </p>
                 </div>
                 <button
-                  onClick={() => console.log("Delete task", task.id)}
+                  onClick={() => dispatch(deleteTask(task.id))}
                   className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                   aria-label="delete task"
                 >

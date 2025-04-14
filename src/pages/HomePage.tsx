@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import type { RootState } from "../store";
 import { Task } from "../type/types";
 import { Calendar, Clipboard, FolderOpen, Search } from "lucide-react";
+import TaskFilterOperation from "../features/task/TaskFilterOperation";
+import useIsMobile from "../hooks/useIsMobile";
 
 const HomePage = () => {
   const tasks = useSelector((state: RootState) => state.tasks.items);
@@ -11,6 +13,7 @@ const HomePage = () => {
   const [statusFilter, setStatusFilter] = useState("All");
   const [priorityFilter, setPriorityFilter] = useState("All");
   const [sortOption, setSortOption] = useState("Due Date");
+  const isMobile = useIsMobile();
 
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch =
@@ -56,66 +59,33 @@ const HomePage = () => {
       </div>
 
       {/* Search and Filter Bar */}
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div
+        className={`mb-6 flex justify-between gap-2 ${!isMobile ? "pr-4" : ""}`}
+      >
         {/* Search Box */}
-        <div className="md:col-span-1">
+        <div className="w-80">
           <div className="relative rounded-md shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
             <input
-              type="text"
+              type="search"
               placeholder="Search tasks..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className={`block pl-10 pr-3 py-2 border dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 
+                ${!isMobile ? "w-[360px]" : "w-full"}`}
             />
           </div>
         </div>
-
-        {/* Status Filter */}
-        <div>
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            aria-label="Status"
-          >
-            <option value="All">All Statuses</option>
-            <option value="Pending">Pending</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
-        </div>
-
-        {/* Priority Filter */}
-        <div>
-          <select
-            value={priorityFilter}
-            onChange={(e) => setPriorityFilter(e.target.value)}
-            className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            aria-label="Priority"
-          >
-            <option value="All">All Priorities</option>
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-
-        {/* Sort Option */}
-        <div>
-          <select
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-            aria-label="Sort"
-          >
-            <option value="Due Date">Sort by Due Date</option>
-            <option value="Priority">Sort by Priority</option>
-            <option value="Title">Sort by Title</option>
-          </select>
-        </div>
+        <TaskFilterOperation
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+          priorityFilter={priorityFilter}
+          setPriorityFilter={setPriorityFilter}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+        />
       </div>
 
       {/* Task Grid */}
@@ -141,7 +111,7 @@ const HomePage = () => {
                   {task.title}
                 </h3>
                 <span
-                  className={`ml-2 px-2 py-1 text-xs rounded-full ${
+                  className={`ml-2 px-2 py-1 text-xs rounded-lg ${
                     task.priority === "High"
                       ? "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200"
                       : task.priority === "Medium"
@@ -165,7 +135,7 @@ const HomePage = () => {
                     Status:
                   </span>
                   <span
-                    className={`text-xs px-2 py-1 rounded-full ${
+                    className={`text-xs px-2 py-1 rounded-lg ${
                       task.status === "Completed"
                         ? "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200"
                         : task.status === "In-progress"

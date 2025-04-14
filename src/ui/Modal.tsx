@@ -2,7 +2,6 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
   ReactNode,
   cloneElement,
   ReactElement,
@@ -10,6 +9,7 @@ import {
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
+import useIsMobile from "../hooks/useIsMobile";
 
 type ModalContextType = {
   openName: string;
@@ -58,14 +58,7 @@ const Window = ({
 }) => {
   const { openName, close } = useModalContext();
   const ref = useOutsideClick<HTMLDivElement>(close);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const isMobile = useIsMobile(); 
 
   if (name !== openName) return null;
 
